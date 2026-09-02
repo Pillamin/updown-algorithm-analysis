@@ -861,27 +861,27 @@ function renderConceptSlide(index) {
       <div class="features-list-rows">
         <div class="feature-row-item">
           <div class="feature-row-tag tag-input">입력</div>
-          <div class="feature-row-body">처리할 <strong>입력이 무엇인지 정해져</strong> 있어야 함</div>
+          <div class="feature-row-body">입력 유무와 처리할 데이터가 정해져 있어야 함</div>
         </div>
 
         <div class="feature-row-item">
           <div class="feature-row-tag tag-output">출력</div>
-          <div class="feature-row-body"><strong>1개 이상의 결과(변화)</strong>가 반드시 나와야 함</div>
+          <div class="feature-row-body">1개 이상의 결과(변화)가 반드시 나와야 함</div>
         </div>
 
         <div class="feature-row-item">
           <div class="feature-row-tag tag-def">명확성</div>
-          <div class="feature-row-body">각 단계에서 <strong>무엇을 하는지 명확</strong>하게 표현</div>
+          <div class="feature-row-body">각 단계에서 무엇을 하는지 명확하게 표현</div>
         </div>
 
         <div class="feature-row-item">
           <div class="feature-row-tag tag-eff">수행 가능성</div>
-          <div class="feature-row-body">각 명령은 <strong>논리적으로 수행 가능</strong>해야 함</div>
+          <div class="feature-row-body">각 명령은 논리적으로 수행 가능해야 함</div>
         </div>
 
         <div class="feature-row-item">
           <div class="feature-row-tag tag-fin">유한성</div>
-          <div class="feature-row-body">명령은 <strong>반드시 종료</strong>되어야 함</div>
+          <div class="feature-row-body">명령은 유한한 단계 내에 반드시 종료되어야 함</div>
         </div>
       </div>
     `;
