@@ -1,495 +1,538 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>UpDown AlgoLab — 업다운 알고리즘 시뮬레이터</title>
+  <title>UpDown AlgoLab</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
   <meta name="description" content="순차 탐색, 이분 탐색 등 5가지 알고리즘을 직접 체험하고 성능을 비교하는 중학교 정보 수업용 대화형 시뮬레이터" />
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
+
 <body>
-<div id="app">
+  <div id="app">
 
-  <!-- ── Top Header ──────────────────────────── -->
-  <header id="top-header">
-    <div class="brand">
-      <span class="brand-icon">📊</span>
-      <span class="brand-title">업다운 게임 알고리즘 분석</span>
-      <span class="brand-sub">III. 알고리즘과 프로그래밍 - 알고리즘 분석</span>
-    </div>
-    <button id="btn-concept">💡 개념 설명 보기</button>
-  </header>
-
-  <!-- ── Body (Sidebar + Canvas) ─────────────── -->
-  <div id="body-wrap">
-
-    <!-- Left Sidebar -->
-    <nav id="sidebar">
-      <div id="sidebar-label">학습 모드</div>
-      <div id="sidebar-nav"><!-- JS로 렌더링 --></div>
-      
-      <!-- 사이드바 하단 정보 (약관/개인정보/저작권) -->
-      <div class="sidebar-footer">
-        <div class="footer-links">
-          <button id="btn-privacy" class="footer-link-btn" type="button">개인정보처리방침</button>
-          <span class="footer-dot">·</span>
-          <button id="btn-terms" class="footer-link-btn" type="button">이용약관</button>
-        </div>
-        <div class="footer-copy">
-          © 2026 교사 김상륜(신방학중학교)
-        </div>
-      </div>
-    </nav>
-
-    <!-- Center Canvas -->
-    <main id="center">
-
-      <!-- Context Header Card -->
-      <div id="ctx-header">
-        <div id="ctx-header-top">
-          <span id="ctx-mode"></span>
-          <span id="ctx-algo"></span>
-        </div>
-        <p id="ctx-desc"></p>
-        <div id="ctx-controls"></div>
+    <!-- ── Top Header ──────────────────────────── -->
+    <header id="top-header">
+      <div class="brand" style="cursor: pointer;" onclick="window.location.reload();">
+        <span class="brand-icon">📊</span>
+        <span class="brand-title">업다운 게임 알고리즘 분석</span>
       </div>
 
-      <!-- ═══════════════════════════════════════ -->
-      <!-- 업다운 게임 소개 패널                   -->
-      <!-- ═══════════════════════════════════════ -->
-      <div id="panel-intro" class="hidden panel-full">
-        <div class="intro-body panel-card" style="overflow-y:auto;max-height:100%;display:flex;flex-direction:column;gap:1rem;">
-          
-          <div class="intro-hero" style="background:linear-gradient(135deg, #eef2ff, #f5f3ff);border-radius:1rem;padding:1.25rem;border:1px solid #e0e7ff;">
-            <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem;">
-              <span style="font-size:1.8rem;">🎮</span>
-              <h2 style="font-size:1.25rem;font-weight:800;color:var(--c-indigo);">업다운(Up-Down) 게임이란?</h2>
-            </div>
-            <p style="font-size:.9rem;color:#475569;line-height:1.5;">
-              1부터 100까지의 자연수 중 출제자가 숨긴 비밀 숫자를 맞추는 숫자 추측 게임입니다.<br/>
-              추측한 숫자가 정답보다 작으면 <strong>"UP(업)"</strong>, 크면 <strong>"DOWN(다운)"</strong> 피드백을 받아 정답 범위를 좁혀나갑니다.
-            </p>
+      <nav class="top-nav">
+        <button class="top-nav-btn" onclick="window.open('https://abstraction-brown.vercel.app/', '_blank')">🧩
+          추상화</button>
+        <div class="top-nav-divider"></div>
+        <button class="top-nav-btn" onclick="window.open('https://algorithm-two-pi.vercel.app/', '_blank')">📜 알고리즘</button>
+        <div class="top-nav-divider"></div>
+        <button class="top-nav-btn" onclick="window.open('https://flowchart-drawer.vercel.app/', '_blank')">✍️ 알고리즘
+          작성</button>
+        <div class="top-nav-divider"></div>
+        <button class="top-nav-btn active" onclick="window.location.reload();">📊 알고리즘 분석</button>
+      </nav>
+
+      <button id="btn-concept">💡 개념 설명 보기</button>
+    </header>
+
+    <!-- ── Body (Sidebar + Canvas) ─────────────── -->
+    <div id="body-wrap">
+
+      <!-- Left Sidebar -->
+      <nav id="sidebar">
+        <div id="sidebar-label">학습 모드</div>
+        <div id="sidebar-nav"><!-- JS로 렌더링 --></div>
+
+        <!-- 사이드바 하단 정보 (약관/개인정보/저작권) -->
+        <div class="sidebar-footer">
+          <div class="footer-links">
+            <button id="btn-privacy" class="footer-link-btn" type="button">개인정보처리방침</button>
+            <span class="footer-dot">·</span>
+            <button id="btn-terms" class="footer-link-btn" type="button">이용약관</button>
           </div>
+          <div class="footer-copy">
+            © 2026 교사 김상륜(신방학중학교)
+          </div>
+        </div>
+      </nav>
 
-          <!-- 3단계 규칙 카드 -->
-          <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:.75rem;">
-            <div style="background:#f8fafc;border-radius:.85rem;padding:1rem;border:1.5px dashed var(--c-border);">
-              <div style="font-size:1.2rem;margin-bottom:.3rem;">1️⃣ 숫자 제시</div>
-              <p style="font-size:.82rem;color:#64748b;line-height:1.4;">현재 탐색 범위 내에서 자신이 생각한 숫자를 하나 제시합니다.</p>
-            </div>
-            <div style="background:#f8fafc;border-radius:.85rem;padding:1rem;border:1.5px dashed var(--c-border);">
-              <div style="font-size:1.2rem;margin-bottom:.3rem;">2️⃣ 피드백 확인</div>
-              <p style="font-size:.82rem;color:#64748b;line-height:1.4;">
-                <span style="color:var(--c-sky);font-weight:700;">UP</span>: 더 큰 숫자입니다.<br/>
-                <span style="color:var(--c-rose);font-weight:700;">DOWN</span>: 더 작은 숫자입니다.
+      <!-- Center Canvas -->
+      <main id="center">
+
+        <!-- Context Header Card -->
+        <div id="ctx-header">
+          <div id="ctx-header-top">
+            <span id="ctx-mode"></span>
+            <span id="ctx-algo"></span>
+          </div>
+          <p id="ctx-desc"></p>
+          <div id="ctx-controls"></div>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- 업다운 게임 소개 패널                   -->
+        <!-- ═══════════════════════════════════════ -->
+        <div id="panel-intro" class="hidden panel-full">
+          <div class="intro-body panel-card"
+            style="overflow-y:auto;max-height:100%;display:flex;flex-direction:column;gap:1rem;">
+
+            <div class="intro-hero"
+              style="background:linear-gradient(135deg, #eef2ff, #f5f3ff);border-radius:1rem;padding:1.25rem;border:1px solid #e0e7ff;">
+              <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem;">
+                <span style="font-size:1.8rem;">🎮</span>
+                <h2 style="font-size:1.25rem;font-weight:800;color:var(--c-indigo);">업다운(Up-Down) 게임이란?</h2>
+              </div>
+              <p style="font-size:.9rem;color:#475569;line-height:1.5;">
+                1부터 100까지의 자연수 중 출제자가 숨긴 비밀 숫자를 맞추는 숫자 추측 게임입니다.<br />
+                추측한 숫자가 정답보다 작으면 <strong>"UP(업)"</strong>, 크면 <strong>"DOWN(다운)"</strong> 피드백을 받아 정답 범위를 좁혀나갑니다.
               </p>
             </div>
-            <div style="background:#f8fafc;border-radius:.85rem;padding:1rem;border:1.5px dashed var(--c-border);">
-              <div style="font-size:1.2rem;margin-bottom:.3rem;">3️⃣ 정답 탐색</div>
-              <p style="font-size:.82rem;color:#64748b;line-height:1.4;">피드백을 바탕으로 범위를 좁혀 최소한의 시도로 정답을 맞춥니다.</p>
-            </div>
-          </div>
 
-          <!-- 알고리즘과 컴퓨터 과학 연결 -->
-          <div style="background:#faf5ff;border-radius:.85rem;padding:1rem 1.25rem;border:1px solid #f3e8ff;">
-            <p style="font-size:.88rem;font-weight:800;color:var(--c-violet);margin-bottom:.4rem;">💡 정보 과학(컴퓨터 알고리즘)과의 연결</p>
-            <p style="font-size:.82rem;color:#475569;line-height:1.5;">
-              업다운 게임은 컴퓨터 과학의 <strong>'탐색 알고리즘(Search Algorithm)'</strong> 핵심 원리를 배우기에 가장 좋은 예시입니다.<br/>
-              1부터 순서대로 찾는 <em>순차 탐색</em>, 중간값을 골라 탐색 대상을 절반씩 줄이는 <em>이분 탐색</em> 등 탐색 방식에 따라 시도 횟수(시간 복잡도)가 크게 달라집니다.
-            </p>
-            <div style="margin-top:.75rem;display:flex;gap:.6rem;">
-              <button id="intro-to-user" class="btn-primary-sm">🕹️ 직접 플레이해보기</button>
-              <button id="intro-to-comp" class="btn-outline-sm">🤖 알고리즘 관찰하기</button>
+            <!-- 3단계 규칙 카드 -->
+            <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:.75rem;">
+              <div style="background:#f8fafc;border-radius:.85rem;padding:1rem;border:1.5px dashed var(--c-border);">
+                <div style="font-size:1.2rem;margin-bottom:.3rem;">1️⃣ 숫자 제시</div>
+                <p style="font-size:.82rem;color:#64748b;line-height:1.4;">현재 탐색 범위 내에서 자신이 생각한 숫자를 하나 제시합니다.</p>
+              </div>
+              <div style="background:#f8fafc;border-radius:.85rem;padding:1rem;border:1.5px dashed var(--c-border);">
+                <div style="font-size:1.2rem;margin-bottom:.3rem;">2️⃣ 피드백 확인</div>
+                <p style="font-size:.82rem;color:#64748b;line-height:1.4;">
+                  <span style="color:var(--c-sky);font-weight:700;">UP</span>: 더 큰 숫자입니다.<br />
+                  <span style="color:var(--c-rose);font-weight:700;">DOWN</span>: 더 작은 숫자입니다.
+                </p>
+              </div>
+              <div style="background:#f8fafc;border-radius:.85rem;padding:1rem;border:1.5px dashed var(--c-border);">
+                <div style="font-size:1.2rem;margin-bottom:.3rem;">3️⃣ 정답 탐색</div>
+                <p style="font-size:.82rem;color:#64748b;line-height:1.4;">피드백을 바탕으로 범위를 좁혀 최소한의 시도로 정답을 맞춥니다.</p>
+              </div>
             </div>
-          </div>
 
+            <!-- 알고리즘과 컴퓨터 과학 연결 -->
+            <div style="background:#faf5ff;border-radius:.85rem;padding:1rem 1.25rem;border:1px solid #f3e8ff;">
+              <p style="font-size:.88rem;font-weight:800;color:var(--c-violet);margin-bottom:.4rem;">💡 정보 과학(컴퓨터
+                알고리즘)과의 연결</p>
+              <p style="font-size:.82rem;color:#475569;line-height:1.5;">
+                업다운 게임은 컴퓨터 과학의 <strong>'탐색 알고리즘(Search Algorithm)'</strong> 핵심 원리를 배우기에 가장 좋은 예시입니다.<br />
+                1부터 순서대로 찾는 <em>순차 탐색</em>, 중간값을 골라 탐색 대상을 절반씩 줄이는 <em>이분 탐색</em> 등 탐색 방식에 따라 시도 횟수(시간 복잡도)가 크게 달라집니다.
+              </p>
+              <div style="margin-top:.75rem;display:flex;gap:.6rem;">
+                <button id="intro-to-user" class="btn-primary-sm">🕹️ 직접 플레이해보기</button>
+                <button id="intro-to-comp" class="btn-outline-sm">🤖 알고리즘 관찰하기</button>
+              </div>
+            </div>
+
+          </div>
         </div>
-      </div>
 
-      <!-- ═══════════════════════════════════════ -->
-      <!-- 사용자 모드 패널                        -->
-      <!-- ═══════════════════════════════════════ -->
-      <div id="panel-user" class="hidden panel-full">
-        <div class="user-body">
+        <!-- ═══════════════════════════════════════ -->
+        <!-- 사용자 모드 패널                        -->
+        <!-- ═══════════════════════════════════════ -->
+        <div id="panel-user" class="hidden panel-full">
+          <div class="user-body">
 
-          <!-- 메인 플레이 영역 -->
-          <div class="panel-card user-main">
-            <p class="section-title">숫자를 맞춰보세요</p>
+            <!-- 메인 플레이 영역 -->
+            <div class="panel-card user-main">
+              <p class="section-title">숫자를 맞춰보세요</p>
 
-            <!-- 통계 -->
-            <div class="user-stats-grid">
-              <div class="stat-card">
-                <div class="stat-card-val" id="user-attempts">0</div>
-                <div class="stat-card-lbl">시도 횟수</div>
+              <!-- 통계 -->
+              <div class="user-stats-grid">
+                <div class="stat-card">
+                  <div class="stat-card-val" id="user-attempts">0</div>
+                  <div class="stat-card-lbl">시도 횟수</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-card-val" style="font-size:1.05rem;" id="user-range">1 ~ 100</div>
+                  <div class="stat-card-lbl">현재 범위</div>
+                </div>
               </div>
-              <div class="stat-card">
-                <div class="stat-card-val" style="font-size:1.05rem;" id="user-range">1 ~ 100</div>
-                <div class="stat-card-lbl">현재 범위</div>
+
+              <!-- 입력 -->
+              <div class="user-input-wrap">
+                <input id="user-input" type="number" min="1" max="100" placeholder="숫자를 입력하세요." />
+                <button id="user-submit" class="btn-primary">확인</button>
+              </div>
+
+              <!-- 피드백 -->
+              <div class="feedback-display" id="user-feedback">
+                <span style="color:#94a3b8;">여기에 결과가 표시됩니다</span>
+              </div>
+
+              <!-- Number Line -->
+              <div class="numberline-wrap">
+                <div class="numberline-label">🗺️ 현재 탐색 범위</div>
+                <div id="user-numberline"></div>
               </div>
             </div>
 
-            <!-- 입력 -->
-            <div class="user-input-wrap">
-              <input id="user-input" type="number" min="1" max="100" placeholder="숫자를 입력하세요." />
-              <button id="user-submit" class="btn-primary">확인</button>
+            <!-- 우측: 기록 로그 -->
+            <div class="panel-card user-log-card">
+              <p class="section-title">📋 시도 기록</p>
+              <div class="log-area" id="user-log">
+                <div class="log-empty">아직 기록이 없어요</div>
+              </div>
             </div>
 
-            <!-- 피드백 -->
-            <div class="feedback-display" id="user-feedback">
-              <span style="color:#94a3b8;">여기에 결과가 표시됩니다</span>
-            </div>
-
-            <!-- Number Line -->
-            <div class="numberline-wrap">
-              <div class="numberline-label">🗺️ 현재 탐색 범위</div>
-              <div id="user-numberline"></div>
-            </div>
           </div>
-
-          <!-- 우측: 기록 로그 -->
-          <div class="panel-card user-log-card">
-            <p class="section-title">📋 시도 기록</p>
-            <div class="log-area" id="user-log">
-              <div class="log-empty">아직 기록이 없어요</div>
-            </div>
-          </div>
-
         </div>
-      </div>
 
 
-      <!-- ═══════════════════════════════════════ -->
-      <!-- 컴퓨터 모드 패널                        -->
-      <!-- ═══════════════════════════════════════ -->
-      <div id="panel-computer" class="hidden panel-full">
+        <!-- ═══════════════════════════════════════ -->
+        <!-- 컴퓨터 모드 패널                        -->
+        <!-- ═══════════════════════════════════════ -->
+        <div id="panel-computer" class="hidden panel-full">
 
-        <!-- 1) 5가지 알고리즘 설명 화면 (한 화면 5분할 핏 레이아웃) -->
-        <div id="comp-intro-view" class="panel-card" style="flex:1;min-height:0;display:flex;flex-direction:column;gap:.5rem;padding:.75rem 1rem;overflow:hidden;">
-          
-          <div class="comp-algo-card" data-algo="sequential" style="flex:1;background:#f8fafc;border-radius:.75rem;padding:.6rem 1.1rem;border:1.5px solid var(--c-border);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:space-between;gap:.75rem;">
-            <div style="flex:1;min-width:0;">
-              <div style="margin-bottom:.15rem;">
-                <span style="font-size:1.1rem;font-weight:800;color:var(--c-indigo);">1. 순차 탐색</span>
+          <!-- 1) 5가지 알고리즘 설명 화면 (한 화면 5분할 핏 레이아웃) -->
+          <div id="comp-intro-view" class="panel-card"
+            style="flex:1;min-height:0;display:flex;flex-direction:column;gap:.5rem;padding:.75rem 1rem;overflow:hidden;">
+
+            <div class="comp-algo-card" data-algo="sequential"
+              style="flex:1;background:#f8fafc;border-radius:.75rem;padding:.6rem 1.1rem;border:1.5px solid var(--c-border);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:space-between;gap:.75rem;">
+              <div style="flex:1;min-width:0;">
+                <div style="margin-bottom:.15rem;">
+                  <span style="font-size:1.1rem;font-weight:800;color:var(--c-indigo);">1. 순차 탐색</span>
+                </div>
+                <p style="font-size:.88rem;color:#475569;line-height:1.35;margin:0;">1부터 100까지 순서대로 1씩 증가하며 찾는 가장 단순하고
+                  정직한 방법입니다.</p>
               </div>
-              <p style="font-size:.88rem;color:#475569;line-height:1.35;margin:0;">1부터 100까지 순서대로 1씩 증가하며 찾는 가장 단순하고 정직한 방법입니다.</p>
+              <span style="font-size:1.2rem;color:var(--c-indigo);font-weight:700;flex-shrink:0;">➔</span>
             </div>
-            <span style="font-size:1.2rem;color:var(--c-indigo);font-weight:700;flex-shrink:0;">➔</span>
-          </div>
 
-          <div class="comp-algo-card" data-algo="binary" style="flex:1;background:#f8fafc;border-radius:.75rem;padding:.6rem 1.1rem;border:1.5px solid var(--c-border);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:space-between;gap:.75rem;">
-            <div style="flex:1;min-width:0;">
-              <div style="margin-bottom:.15rem;">
-                <span style="font-size:1.1rem;font-weight:800;color:var(--c-violet);">2. 이분 탐색</span>
+            <div class="comp-algo-card" data-algo="binary"
+              style="flex:1;background:#f8fafc;border-radius:.75rem;padding:.6rem 1.1rem;border:1.5px solid var(--c-border);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:space-between;gap:.75rem;">
+              <div style="flex:1;min-width:0;">
+                <div style="margin-bottom:.15rem;">
+                  <span style="font-size:1.1rem;font-weight:800;color:var(--c-violet);">2. 이분 탐색</span>
+                </div>
+                <p style="font-size:.88rem;color:#475569;line-height:1.35;margin:0;">탐색 범위를 절반씩 좁혀 중간값을 추측하는 가장 효율적인 대표
+                  알고리즘입니다.</p>
               </div>
-              <p style="font-size:.88rem;color:#475569;line-height:1.35;margin:0;">탐색 범위를 절반씩 좁혀 중간값을 추측하는 가장 효율적인 대표 알고리즘입니다.</p>
+              <span style="font-size:1.2rem;color:var(--c-violet);font-weight:700;flex-shrink:0;">➔</span>
             </div>
-            <span style="font-size:1.2rem;color:var(--c-violet);font-weight:700;flex-shrink:0;">➔</span>
-          </div>
 
-          <div class="comp-algo-card" data-algo="random_no_dup" style="flex:1;background:#f8fafc;border-radius:.75rem;padding:.6rem 1.1rem;border:1.5px solid var(--c-border);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:space-between;gap:.75rem;">
-            <div style="flex:1;min-width:0;">
-              <div style="margin-bottom:.15rem;">
-                <span style="font-size:1.1rem;font-weight:800;color:var(--c-sky);">3. 무작위 탐색 (중복 제외)</span>
+            <div class="comp-algo-card" data-algo="random_no_dup"
+              style="flex:1;background:#f8fafc;border-radius:.75rem;padding:.6rem 1.1rem;border:1.5px solid var(--c-border);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:space-between;gap:.75rem;">
+              <div style="flex:1;min-width:0;">
+                <div style="margin-bottom:.15rem;">
+                  <span style="font-size:1.1rem;font-weight:800;color:var(--c-sky);">3. 무작위 탐색 (중복 제외)</span>
+                </div>
+                <p style="font-size:.88rem;color:#475569;line-height:1.35;margin:0;">한 번 물어본 숫자는 목록에서 제외하고, 남은 후보 중에서
+                  무작위로 선택합니다.</p>
               </div>
-              <p style="font-size:.88rem;color:#475569;line-height:1.35;margin:0;">한 번 물어본 숫자는 목록에서 제외하고, 남은 후보 중에서 무작위로 선택합니다.</p>
+              <span style="font-size:1.2rem;color:var(--c-sky);font-weight:700;flex-shrink:0;">➔</span>
             </div>
-            <span style="font-size:1.2rem;color:var(--c-sky);font-weight:700;flex-shrink:0;">➔</span>
-          </div>
 
-          <div class="comp-algo-card" data-algo="random_feedback" style="flex:1;background:#f8fafc;border-radius:.75rem;padding:.6rem 1.1rem;border:1.5px solid var(--c-border);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:space-between;gap:.75rem;">
-            <div style="flex:1;min-width:0;">
-              <div style="margin-bottom:.15rem;">
-                <span style="font-size:1.1rem;font-weight:800;color:var(--c-emerald);">4. 무작위 탐색 (업/다운 반영)</span>
+            <div class="comp-algo-card" data-algo="random_feedback"
+              style="flex:1;background:#f8fafc;border-radius:.75rem;padding:.6rem 1.1rem;border:1.5px solid var(--c-border);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:space-between;gap:.75rem;">
+              <div style="flex:1;min-width:0;">
+                <div style="margin-bottom:.15rem;">
+                  <span style="font-size:1.1rem;font-weight:800;color:var(--c-emerald);">4. 무작위 탐색 (업/다운 반영)</span>
+                </div>
+                <p style="font-size:.88rem;color:#475569;line-height:1.35;margin:0;">업/다운 피드백으로 탐색 범위를 좁히되, 해당 범위 안에서
+                  무작위로 숫자를 선택합니다.</p>
               </div>
-              <p style="font-size:.88rem;color:#475569;line-height:1.35;margin:0;">업/다운 피드백으로 탐색 범위를 좁히되, 해당 범위 안에서 무작위로 숫자를 선택합니다.</p>
+              <span style="font-size:1.2rem;color:var(--c-emerald);font-weight:700;flex-shrink:0;">➔</span>
             </div>
-            <span style="font-size:1.2rem;color:var(--c-emerald);font-weight:700;flex-shrink:0;">➔</span>
-          </div>
 
-          <div class="comp-algo-card" data-algo="random_pure" style="flex:1;background:#f8fafc;border-radius:.75rem;padding:.6rem 1.1rem;border:1.5px solid var(--c-border);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:space-between;gap:.75rem;">
-            <div style="flex:1;min-width:0;">
-              <div style="margin-bottom:.15rem;">
-                <span style="font-size:1.1rem;font-weight:800;color:var(--c-rose);">5. 무작위 탐색 (중복 포함)</span>
+            <div class="comp-algo-card" data-algo="random_pure"
+              style="flex:1;background:#f8fafc;border-radius:.75rem;padding:.6rem 1.1rem;border:1.5px solid var(--c-border);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:space-between;gap:.75rem;">
+              <div style="flex:1;min-width:0;">
+                <div style="margin-bottom:.15rem;">
+                  <span style="font-size:1.1rem;font-weight:800;color:var(--c-rose);">5. 무작위 탐색 (중복 포함)</span>
+                </div>
+                <p style="font-size:.88rem;color:#475569;line-height:1.35;margin:0;">아무런 힌트 반영 없이 1~100 사이 숫자를 무한히 뽑는
+                  방법입니다.</p>
               </div>
-              <p style="font-size:.88rem;color:#475569;line-height:1.35;margin:0;">아무런 힌트 반영 없이 1~100 사이 숫자를 무한히 뽑는 방법입니다.</p>
+              <span style="font-size:1.2rem;color:var(--c-rose);font-weight:700;flex-shrink:0;">➔</span>
             </div>
-            <span style="font-size:1.2rem;color:var(--c-rose);font-weight:700;flex-shrink:0;">➔</span>
-          </div>
 
-        </div><!-- #comp-intro-view -->
+          </div><!-- #comp-intro-view -->
 
-        <!-- 2) 개별 알고리즘 실행 뷰 (특정 알고리즘 선택 시) -->
-        <div id="comp-runner-view" class="hidden panel-full">
-          <!-- 상단 컨트롤 바 -->
-          <div class="comp-topbar panel-card">
-            <div class="comp-topbar-row">
-              <!-- 1) 맨 왼쪽: 정답 입력 영역 -->
-              <div class="comp-secret-wrap">
-                <label class="ctrl-label" for="comp-secret-input">정답</label>
-                <input id="comp-secret-input" type="number" min="1" max="100"
-                  placeholder="비워두면 랜덤" class="ctrl-input comp-input-match" />
-                <span id="comp-secret-reveal" class="hidden"></span>
-              </div>
+          <!-- 2) 개별 알고리즘 실행 뷰 (특정 알고리즘 선택 시) -->
+          <div id="comp-runner-view" class="hidden panel-full">
+            <!-- 상단 컨트롤 바 -->
+            <div class="comp-topbar panel-card">
+              <div class="comp-topbar-row">
+                <!-- 1) 맨 왼쪽: 정답 입력 영역 -->
+                <div class="comp-secret-wrap">
+                  <label class="ctrl-label" for="comp-secret-input">정답</label>
+                  <input id="comp-secret-input" type="number" min="1" max="100" placeholder="비워두면 랜덤"
+                    class="ctrl-input comp-input-match" />
+                  <span id="comp-secret-reveal" class="hidden"></span>
+                </div>
 
-              <!-- 2) 가운데: 실행/일시정지/리셋 버튼 그룹 -->
-              <div class="btn-row" style="gap:.5rem;flex-shrink:0;">
-                <button id="comp-run" class="btn-primary">▶ 실행</button>
-                <button id="comp-pause" class="btn-outline" disabled>⏸ 일시정지</button>
-                <button id="comp-reset" class="btn-danger">↺ 리셋</button>
-              </div>
+                <!-- 2) 가운데: 실행/일시정지/리셋 버튼 그룹 -->
+                <div class="btn-row" style="gap:.5rem;flex-shrink:0;">
+                  <button id="comp-run" class="btn-primary">▶ 실행</button>
+                  <button id="comp-pause" class="btn-outline" disabled>⏸ 일시정지</button>
+                  <button id="comp-reset" class="btn-danger">↺ 리셋</button>
+                </div>
 
-              <!-- 3) 맨 오른쪽: 실행 속도 -->
-              <div class="speed-wrap">
-                <span class="ctrl-label">실행 속도</span>
-                <div class="speed-steps" id="comp-speed-btns">
-                  <button class="speed-btn" data-speed="1" title="매우 느림">1</button>
-                  <button class="speed-btn" data-speed="2" title="느림">2</button>
-                  <button class="speed-btn active" data-speed="3" title="보통">3</button>
-                  <button class="speed-btn" data-speed="4" title="빠름">4</button>
-                  <button class="speed-btn" data-speed="5" title="매우 빠름">5</button>
+                <!-- 3) 맨 오른쪽: 실행 속도 -->
+                <div class="speed-wrap">
+                  <span class="ctrl-label">실행 속도</span>
+                  <div class="speed-steps" id="comp-speed-btns">
+                    <button class="speed-btn" data-speed="1" title="매우 느림">1</button>
+                    <button class="speed-btn" data-speed="2" title="느림">2</button>
+                    <button class="speed-btn active" data-speed="3" title="보통">3</button>
+                    <button class="speed-btn" data-speed="4" title="빠름">4</button>
+                    <button class="speed-btn" data-speed="5" title="매우 빠름">5</button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-        <!-- 2열: 좌(로그) + 우(시각화) -->
-        <div class="comp-content">
-          <div class="comp-left panel-card">
-            <p class="section-title">🔍 탐색 로그</p>
-            <div class="log-area comp-log-scroll" id="comp-log">
-              <div class="log-empty">알고리즘을 선택하고 실행해 보세요</div>
-            </div>
-          </div>
-          <div class="comp-right panel-card">
-            <p class="section-title">📊 범위 시각화</p>
-            <div id="comp-viz" class="comp-viz-area"></div>
-          </div>
-        </div>
-        </div><!-- #comp-runner-view -->
-
-      </div><!-- #panel-computer -->
-
-
-      <!-- ═══════════════════════════════════════ -->
-      <!-- 시뮬레이션 모드 패널                    -->
-      <!-- ═══════════════════════════════════════ -->
-      <div id="panel-sim" class="hidden panel-full">
-
-        <!-- 실행 설정 (알고리즘 선택 삭제, 횟수 설정 & 실행 버튼만 배치) -->
-        <div class="panel-card sim-settings-card">
-          <div class="sim-ctrl-row">
-            <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;">
-              <span class="ctrl-label" style="font-size:.82rem;font-weight:700;color:var(--c-text);">⚙️ 실행 횟수</span>
-              <div class="sim-preset-group" id="sim-preset-btns">
-                <button type="button" class="preset-btn" data-runs="1000">1,000회</button>
-                <button type="button" class="preset-btn" data-runs="5000">5,000회</button>
-                <button type="button" class="preset-btn active" data-runs="10000">10,000회 (추천)</button>
-                <button type="button" class="preset-btn" data-runs="50000">50,000회</button>
+            <!-- 2열: 좌(로그) + 우(시각화) -->
+            <div class="comp-content">
+              <div class="comp-left panel-card">
+                <p class="section-title">🔍 탐색 로그</p>
+                <div class="log-area comp-log-scroll" id="comp-log">
+                  <div class="log-empty">알고리즘을 선택하고 실행해 보세요</div>
+                </div>
+              </div>
+              <div class="comp-right panel-card">
+                <p class="section-title">📊 범위 시각화</p>
+                <div id="comp-viz" class="comp-viz-area"></div>
               </div>
             </div>
-            <div style="display:flex;gap:.5rem;align-items:center;">
-              <button id="btn-sim-stats-modal" class="btn-outline-sm hidden" style="padding:.4rem 1rem;font-size:.84rem;font-weight:700;display:inline-flex;align-items:center;gap:.35rem;" data-target="modal-sim-stats">📋 시뮬레이션 통계 요약</button>
-              <button id="sim-run-btn" class="btn-primary-sm" style="padding:.4rem 1.25rem;font-size:.84rem;">▶ 시뮬레이션 실행</button>
+          </div><!-- #comp-runner-view -->
+
+        </div><!-- #panel-computer -->
+
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- 시뮬레이션 모드 패널                    -->
+        <!-- ═══════════════════════════════════════ -->
+        <div id="panel-sim" class="hidden panel-full">
+
+          <!-- 실행 설정 (알고리즘 선택 삭제, 횟수 설정 & 실행 버튼만 배치) -->
+          <div class="panel-card sim-settings-card">
+            <div class="sim-ctrl-row">
+              <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;">
+                <span class="ctrl-label" style="font-size:.82rem;font-weight:700;color:var(--c-text);">⚙️ 실행 횟수</span>
+                <div class="sim-preset-group" id="sim-preset-btns">
+                  <button type="button" class="preset-btn" data-runs="1000">1,000회</button>
+                  <button type="button" class="preset-btn" data-runs="5000">5,000회</button>
+                  <button type="button" class="preset-btn active" data-runs="10000">10,000회 (추천)</button>
+                  <button type="button" class="preset-btn" data-runs="50000">50,000회</button>
+                </div>
+              </div>
+              <div style="display:flex;gap:.5rem;align-items:center;">
+                <button id="btn-sim-stats-modal" class="btn-outline-sm hidden"
+                  style="padding:.4rem 1rem;font-size:.84rem;font-weight:700;display:inline-flex;align-items:center;gap:.35rem;"
+                  data-target="modal-sim-stats">📋 시뮬레이션 통계 요약</button>
+                <button id="sim-run-btn" class="btn-primary-sm" style="padding:.4rem 1.25rem;font-size:.84rem;">▶ 시뮬레이션
+                  실행</button>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- 진행 바 -->
-        <div id="sim-progress-wrap" class="panel-card hidden" style="padding:.5rem 1rem;">
-          <p class="section-title" style="margin-bottom:.25rem;">⏳ 시뮬레이션 진행 중...</p>
-          <div class="progress-bar-bg"><div id="sim-progress-bar"></div></div>
-          <span id="sim-progress-txt">0%</span>
-        </div>
-
-        <!-- 결과 (3개 지표 차트 병렬 배치) -->
-        <div id="sim-result-area" class="hidden sim-results-wrap">
-          
-          <!-- 3개 지표 차트 그리드 (좌: 최소 / 중: 평균 / 우: 최대) -->
-          <div class="sim-charts-grid">
-            
-            <!-- 1. 최소 시도 횟수 -->
-            <div class="panel-card sim-chart-col">
-              <div class="sim-col-header">
-                <span class="sim-col-badge badge-min">최소 시도</span>
-                <span class="sim-col-sub">Best Case</span>
-              </div>
-              <div class="sim-chart-box"><canvas id="sim-chart-min"></canvas></div>
+          <!-- 진행 바 -->
+          <div id="sim-progress-wrap" class="panel-card hidden" style="padding:.5rem 1rem;">
+            <p class="section-title" style="margin-bottom:.25rem;">⏳ 시뮬레이션 진행 중...</p>
+            <div class="progress-bar-bg">
+              <div id="sim-progress-bar"></div>
             </div>
+            <span id="sim-progress-txt">0%</span>
+          </div>
 
-            <!-- 2. 평균 시도 횟수 -->
-            <div class="panel-card sim-chart-col highlight-col">
-              <div class="sim-col-header">
-                <span class="sim-col-badge badge-avg">평균 시도</span>
-                <span class="sim-col-sub">Average Case</span>
-              </div>
-              <div class="sim-chart-box"><canvas id="sim-chart-avg"></canvas></div>
-            </div>
+          <!-- 결과 (3개 지표 차트 병렬 배치) -->
+          <div id="sim-result-area" class="hidden sim-results-wrap">
 
-            <!-- 3. 최대 시도 횟수 -->
-            <div class="panel-card sim-chart-col">
-              <div class="sim-col-header">
-                <span class="sim-col-badge badge-max">최대 시도</span>
-                <span class="sim-col-sub" title="4번은 이론상 100, 5번은 이론상 무한대입니다.">Worst Case (4번 이론상 100 · 5번 이론상 무한대)</span>
+            <!-- 3개 지표 차트 그리드 (좌: 최소 / 중: 평균 / 우: 최대) -->
+            <div class="sim-charts-grid">
+
+              <!-- 1. 최소 시도 횟수 -->
+              <div class="panel-card sim-chart-col">
+                <div class="sim-col-header">
+                  <span class="sim-col-badge badge-min">최소 시도</span>
+                  <span class="sim-col-sub">Best Case</span>
+                </div>
+                <div class="sim-chart-box"><canvas id="sim-chart-min"></canvas></div>
               </div>
-              <div class="sim-chart-box"><canvas id="sim-chart-max"></canvas></div>
+
+              <!-- 2. 평균 시도 횟수 -->
+              <div class="panel-card sim-chart-col highlight-col">
+                <div class="sim-col-header">
+                  <span class="sim-col-badge badge-avg">평균 시도</span>
+                  <span class="sim-col-sub">Average Case</span>
+                </div>
+                <div class="sim-chart-box"><canvas id="sim-chart-avg"></canvas></div>
+              </div>
+
+              <!-- 3. 최대 시도 횟수 -->
+              <div class="panel-card sim-chart-col">
+                <div class="sim-col-header">
+                  <span class="sim-col-badge badge-max">최대 시도</span>
+                  <span class="sim-col-sub" title="4번은 이론상 100, 5번은 이론상 무한대입니다.">Worst Case (4번 이론상 100 · 5번 이론상
+                    무한대)</span>
+                </div>
+                <div class="sim-chart-box"><canvas id="sim-chart-max"></canvas></div>
+              </div>
+
             </div>
 
           </div>
 
         </div>
+        <!-- ─── 패널 끝 ─── -->
 
+      </main>
+    </div><!-- #body-wrap -->
+  </div><!-- #app -->
+
+  <!-- ── 개념 설명 슬라이드 모달 ─────────────────────── -->
+  <div id="modal-concept" class="hidden modal-overlay">
+    <div class="modal-box concept-slide-modal">
+      <!-- 헤더: 단계 뱃지 + 닫기 버튼 -->
+      <div class="slide-modal-header">
+        <span class="slide-step-badge" id="concept-step-badge">1/6 단계</span>
+        <button class="modal-close-btn" data-target="modal-concept">✕</button>
       </div>
-      <!-- ─── 패널 끝 ─── -->
 
-    </main>
-  </div><!-- #body-wrap -->
-</div><!-- #app -->
-
-<!-- ── 개념 설명 슬라이드 모달 ─────────────────────── -->
-<div id="modal-concept" class="hidden modal-overlay">
-  <div class="modal-box concept-slide-modal">
-    <!-- 헤더: 단계 뱃지 + 닫기 버튼 -->
-    <div class="slide-modal-header">
-      <span class="slide-step-badge" id="concept-step-badge">1/6 단계</span>
-      <button class="modal-close-btn" data-target="modal-concept">✕</button>
-    </div>
-
-    <!-- 슬라이드 본문 영역 -->
-    <div class="slide-modal-body" id="concept-slide-body">
-      <!-- JS에서 슬라이드 내용 동적 렌더링 -->
-    </div>
-
-    <!-- 푸터: 인디케이터 + 네비게이션 버튼 -->
-    <div class="slide-modal-footer">
-      <div class="slide-dots" id="concept-slide-dots">
-        <!-- JS 렌더링 -->
+      <!-- 슬라이드 본문 영역 -->
+      <div class="slide-modal-body" id="concept-slide-body">
+        <!-- JS에서 슬라이드 내용 동적 렌더링 -->
       </div>
-      <div class="slide-nav-btns">
-        <button id="concept-prev-btn" class="btn-slide-nav btn-slide-prev" type="button">❮ 이전</button>
-        <button id="concept-next-btn" class="btn-slide-nav btn-slide-next" type="button">다음 개념 ❯</button>
+
+      <!-- 푸터: 인디케이터 + 네비게이션 버튼 -->
+      <div class="slide-modal-footer">
+        <div class="slide-dots" id="concept-slide-dots">
+          <!-- JS 렌더링 -->
+        </div>
+        <div class="slide-nav-btns">
+          <button id="concept-prev-btn" class="btn-slide-nav btn-slide-prev" type="button">❮ 이전</button>
+          <button id="concept-next-btn" class="btn-slide-nav btn-slide-next" type="button">다음 개념 ❯</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- ── 개인정보처리방침 모달 ──────────────── -->
-<div id="modal-privacy" class="hidden modal-overlay">
-  <div class="modal-box doc-modal-box">
-    <div class="modal-header">
-      <h2 class="modal-title">🔒 개인정보처리방침</h2>
-      <button class="modal-close-btn" data-target="modal-privacy">✕</button>
-    </div>
-    <div class="modal-body doc-content">
-      <p style="font-size:.88rem;color:#475569;line-height:1.6;margin-bottom:.5rem;">
-        <strong>업다운 게임 알고리즘 분석 웹 애플리케이션</strong>(이하 '본 서비스')은 개인정보 보호법 제30조에 따라 정보주체의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 다음과 같이 개인정보 처리방침을 수립·공개합니다.
-      </p>
-      
-      <div class="doc-section">
-        <h4>제1조 (개인정보의 처리 목적)</h4>
-        <p>본 서비스는 중학교 정보 교과의 '알고리즘 분석' 단원 학습을 위한 교육용 웹 애플리케이션으로, 학생 및 이용자의 개인정보를 별도의 서버로 수집하거나 전송하지 않으며 브라우저 내에서만 탐색 시뮬레이션을 수행합니다.</p>
+  <!-- ── 개인정보처리방침 모달 ──────────────── -->
+  <div id="modal-privacy" class="hidden modal-overlay">
+    <div class="modal-box doc-modal-box">
+      <div class="modal-header">
+        <h2 class="modal-title">🔒 개인정보처리방침</h2>
+        <button class="modal-close-btn" data-target="modal-privacy">✕</button>
       </div>
-
-      <div class="doc-section">
-        <h4>제2조 (처리하는 개인정보 항목 및 수집 방법)</h4>
-        <p>본 서비스는 회원가입이나 로그인 절차가 없는 완전한 비회원제 서비스로, 이름, 학번, 이메일 등의 <strong>개인식별정보를 일절 수집하거나 요구하지 않습니다.</strong> 시뮬레이션 및 플레이 데이터는 브라우저 메모리에서만 일시적으로 사용됩니다.</p>
-      </div>
-
-      <div class="doc-section">
-        <h4>제3조 (개인정보의 처리 및 보유기간)</h4>
-        <p>서버를 통한 개인정보 저장을 수행하지 않습니다. 사용자가 브라우저 창을 닫거나 새로고침하면 모든 임시 데이터는 즉시 초기화/소멸됩니다.</p>
-      </div>
-
-      <div class="doc-section">
-        <h4>제4조 (개인정보의 제3자 제공 및 위탁)</h4>
-        <p>이용자의 개인정보를 제3자에게 전송, 제공 또는 위탁하지 않습니다. 모든 알고리즘 연산과 시뮬레이션은 사용자 기기(브라우저)에서 단독 실행됩니다.</p>
-      </div>
-
-      <div class="doc-section">
-        <h4>제5조 (보호책임자 및 문의처)</h4>
-        <p>
-          - <strong>담당자:</strong> 김상륜 (신방학중학교 교사)<br/>
-          - <strong>이메일:</strong> edukim99@sen.go.kr<br/>
-          - <strong>연락처:</strong> 02-956-6105
+      <div class="modal-body doc-content">
+        <p style="font-size:.88rem;color:#475569;line-height:1.6;margin-bottom:.5rem;">
+          <strong>업다운 게임 알고리즘 분석 웹 애플리케이션</strong>(이하 '본 서비스')은 개인정보 보호법 제30조에 따라 정보주체의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게
+          처리할 수 있도록 다음과 같이 개인정보 처리방침을 수립·공개합니다.
         </p>
+
+        <div class="doc-section">
+          <h4>제1조 (개인정보의 처리 목적)</h4>
+          <p>본 서비스는 중학교 정보 교과의 '알고리즘 분석' 단원 학습을 위한 교육용 웹 애플리케이션으로, 학생 및 이용자의 개인정보를 별도의 서버로 수집하거나 전송하지 않으며 브라우저 내에서만 탐색
+            시뮬레이션을 수행합니다.</p>
+        </div>
+
+        <div class="doc-section">
+          <h4>제2조 (처리하는 개인정보 항목 및 수집 방법)</h4>
+          <p>본 서비스는 회원가입이나 로그인 절차가 없는 완전한 비회원제 서비스로, 이름, 학번, 이메일 등의 <strong>개인식별정보를 일절 수집하거나 요구하지 않습니다.</strong> 시뮬레이션 및
+            플레이 데이터는 브라우저 메모리에서만 일시적으로 사용됩니다.</p>
+        </div>
+
+        <div class="doc-section">
+          <h4>제3조 (개인정보의 처리 및 보유기간)</h4>
+          <p>서버를 통한 개인정보 저장을 수행하지 않습니다. 사용자가 브라우저 창을 닫거나 새로고침하면 모든 임시 데이터는 즉시 초기화/소멸됩니다.</p>
+        </div>
+
+        <div class="doc-section">
+          <h4>제4조 (개인정보의 제3자 제공 및 위탁)</h4>
+          <p>이용자의 개인정보를 제3자에게 전송, 제공 또는 위탁하지 않습니다. 모든 알고리즘 연산과 시뮬레이션은 사용자 기기(브라우저)에서 단독 실행됩니다.</p>
+        </div>
+
+        <div class="doc-section">
+          <h4>제5조 (보호책임자 및 문의처)</h4>
+          <p>
+            - <strong>담당자:</strong> 김상륜 (신방학중학교 교사)<br />
+            - <strong>이메일:</strong> edukim99@sen.go.kr<br />
+            - <strong>연락처:</strong> 02-956-6105
+          </p>
+        </div>
       </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-primary modal-close-btn" data-target="modal-privacy" style="padding:.45rem 1.4rem;font-size:.85rem;">확인</button>
+      <div class="modal-footer">
+        <button class="btn-primary modal-close-btn" data-target="modal-privacy"
+          style="padding:.45rem 1.4rem;font-size:.85rem;">확인</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- ── 이용약관 모달 ──────────────────────── -->
-<div id="modal-terms" class="hidden modal-overlay">
-  <div class="modal-box doc-modal-box">
-    <div class="modal-header">
-      <h2 class="modal-title">📜 서비스 이용약관</h2>
-      <button class="modal-close-btn" data-target="modal-terms">✕</button>
-    </div>
-    <div class="modal-body doc-content">
-      <p style="font-size:.88rem;color:#475569;line-height:1.6;margin-bottom:.5rem;">
-        본 이용약관은 <strong>업다운 게임 알고리즘 분석 웹 애플리케이션</strong>(이하 '본 서비스')이 제공하는 교육용 웹 서비스의 이용 조건 및 절차에 관한 사항을 규정합니다.
-      </p>
-      
-      <div class="doc-section">
-        <h4>제1조 (목적 및 정의)</h4>
-        <p>본 서비스는 중학교 정보 교과의 '알고리즘 분석' 단원 학습을 위해 무상으로 제공되는 대화형 탐색 알고리즘 시뮬레이션 도구입니다.</p>
+  <!-- ── 이용약관 모달 ──────────────────────── -->
+  <div id="modal-terms" class="hidden modal-overlay">
+    <div class="modal-box doc-modal-box">
+      <div class="modal-header">
+        <h2 class="modal-title">📜 서비스 이용약관</h2>
+        <button class="modal-close-btn" data-target="modal-terms">✕</button>
       </div>
-
-      <div class="doc-section">
-        <h4>제2조 (서비스의 무상 제공)</h4>
-        <p>본 서비스는 공교육 현장 및 개인 학습 목적으로 회원가입 없이 누구나 무료로 자유롭게 이용할 수 있습니다.</p>
-      </div>
-
-      <div class="doc-section">
-        <h4>제3조 (저작권 및 이용 제한)</h4>
-        <p>본 서비스의 소스코드, UI 디자인, 알고리즘 시각화 로직의 저작권은 서비스 제공자에게 있으며, 학교 정보 수업 및 개인 학습 목적으로 자유롭게 활용 가능합니다. (상업적 무단 배포 금지)</p>
-      </div>
-
-      <div class="doc-section">
-        <h4>제4조 (면책 조항)</h4>
-        <p>본 서비스는 무료 교육용 도구로서 사용자 브라우저 환경에 따른 시뮬레이션 속도 차이나 브라우저 종료 시 임시 데이터 초기화에 대해 별도의 보상 책임을 지지 않습니다.</p>
-      </div>
-
-      <div class="doc-section">
-        <h4>제5조 (문의처)</h4>
-        <p>
-          - <strong>담당자:</strong> 김상륜 (신방학중학교 교사)<br/>
-          - <strong>이메일:</strong> edukim99@sen.go.kr
+      <div class="modal-body doc-content">
+        <p style="font-size:.88rem;color:#475569;line-height:1.6;margin-bottom:.5rem;">
+          본 이용약관은 <strong>업다운 게임 알고리즘 분석 웹 애플리케이션</strong>(이하 '본 서비스')이 제공하는 교육용 웹 서비스의 이용 조건 및 절차에 관한 사항을 규정합니다.
         </p>
+
+        <div class="doc-section">
+          <h4>제1조 (목적 및 정의)</h4>
+          <p>본 서비스는 중학교 정보 교과의 '알고리즘 분석' 단원 학습을 위해 무상으로 제공되는 대화형 탐색 알고리즘 시뮬레이션 도구입니다.</p>
+        </div>
+
+        <div class="doc-section">
+          <h4>제2조 (서비스의 무상 제공)</h4>
+          <p>본 서비스는 공교육 현장 및 개인 학습 목적으로 회원가입 없이 누구나 무료로 자유롭게 이용할 수 있습니다.</p>
+        </div>
+
+        <div class="doc-section">
+          <h4>제3조 (저작권 및 이용 제한)</h4>
+          <p>본 서비스의 소스코드, UI 디자인, 알고리즘 시각화 로직의 저작권은 서비스 제공자에게 있으며, 학교 정보 수업 및 개인 학습 목적으로 자유롭게 활용 가능합니다. (상업적 무단 배포 금지)
+          </p>
+        </div>
+
+        <div class="doc-section">
+          <h4>제4조 (면책 조항)</h4>
+          <p>본 서비스는 무료 교육용 도구로서 사용자 브라우저 환경에 따른 시뮬레이션 속도 차이나 브라우저 종료 시 임시 데이터 초기화에 대해 별도의 보상 책임을 지지 않습니다.</p>
+        </div>
+
+        <div class="doc-section">
+          <h4>제5조 (문의처)</h4>
+          <p>
+            - <strong>담당자:</strong> 김상륜 (신방학중학교 교사)<br />
+            - <strong>이메일:</strong> edukim99@sen.go.kr
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-primary modal-close-btn" data-target="modal-terms"
+          style="padding:.45rem 1.4rem;font-size:.85rem;">확인</button>
       </div>
     </div>
-    <div class="modal-footer">
-      <button class="btn-primary modal-close-btn" data-target="modal-terms" style="padding:.45rem 1.4rem;font-size:.85rem;">확인</button>
-    </div>
   </div>
-</div>
 
-<!-- ── 시뮬레이션 통계 요약 모달 ──────────────── -->
-<div id="modal-sim-stats" class="hidden modal-overlay">
-  <div class="modal-box doc-modal-box" style="max-width:620px;">
-    <div class="modal-header">
-      <h3 class="modal-title">📋 시뮬레이션 통계 요약</h3>
-      <button class="modal-close-btn" data-target="modal-sim-stats">✕</button>
-    </div>
-    <div class="modal-body" style="padding:1rem 1.25rem;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.65rem;">
-        <span style="font-size:.84rem;color:#64748b;font-weight:600;">알고리즘별 시도 횟수 통계 분석 결과입니다.</span>
-        <button id="sim-export-csv" class="btn-outline-sm">📥 CSV 저장</button>
+  <!-- ── 시뮬레이션 통계 요약 모달 ──────────────── -->
+  <div id="modal-sim-stats" class="hidden modal-overlay">
+    <div class="modal-box doc-modal-box" style="max-width:620px;">
+      <div class="modal-header">
+        <h3 class="modal-title">📋 시뮬레이션 통계 요약</h3>
+        <button class="modal-close-btn" data-target="modal-sim-stats">✕</button>
       </div>
-      <div id="sim-stats-table-modal"></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-primary modal-close-btn" data-target="modal-sim-stats" style="padding:.45rem 1.4rem;font-size:.85rem;">확인</button>
+      <div class="modal-body" style="padding:1rem 1.25rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.65rem;">
+          <span style="font-size:.84rem;color:#64748b;font-weight:600;">알고리즘별 시도 횟수 통계 분석 결과입니다.</span>
+          <button id="sim-export-csv" class="btn-outline-sm">📥 CSV 저장</button>
+        </div>
+        <div id="sim-stats-table-modal"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-primary modal-close-btn" data-target="modal-sim-stats"
+          style="padding:.45rem 1.4rem;font-size:.85rem;">확인</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- ── Scripts ────────────────────────────── -->
-<script src="js/config.js"></script>
-<script src="js/algorithms.js"></script>
-<script src="js/ui.js"></script>
-<script src="js/app.js"></script>
+  <!-- ── Scripts ────────────────────────────── -->
+  <script src="js/config.js"></script>
+  <script src="js/algorithms.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
 </body>
+
 </html>
